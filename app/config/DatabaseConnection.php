@@ -1,7 +1,7 @@
 <?php
 class DatabaseConnection {
     private $host = "localhost";
-    private $db_name = "salon_db"; // Sesuaikan dengan nama database kalian
+    private $db_name = "salon_db"; 
     private $username = "root";
     private $password = "";
     public $conn;
