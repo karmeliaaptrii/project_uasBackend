@@ -4,7 +4,7 @@ class DatabaseConnection {
     private $db_name = "salon_db"; 
     private $username = "root";
     private $password = "";
-    public $conn;
+    public ?PDO $conn;
 
     public function getConnection() {
         $this->conn = null;
