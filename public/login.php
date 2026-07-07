@@ -17,9 +17,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $_SESSION['nama'] = $user['nama'];
         
         if ($user['role_id'] == 1) {
-            header("Location: ../admin/dashboard.php");
+            header("Location: admin/dashboard.php");
         } else {
-            header("Location: ../customer/home.php");
+            header("Location: customer/home.php");
         }
         exit;
     } else {
