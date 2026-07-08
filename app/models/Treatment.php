@@ -28,5 +28,23 @@ class Treatment {
         $stmt = $this->conn->prepare($query);
         return $stmt->execute([$id]);
     }
+
+    public function getById(int $id) {
+        $query = "SELECT * FROM treatments WHERE id = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute([$id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function update(int $id, string $nama, int $harga, int $durasi) {
+        $query = "UPDATE treatments SET nama_layanan = ?, harga = ?, durasi_menit = ? WHERE id = ?";
+        $stmt = $this->conn->prepare($query);
+        return $stmt->execute([
+            htmlspecialchars($nama), 
+            htmlspecialchars($harga), 
+            htmlspecialchars($durasi), 
+            $id
+        ]);
+    }
 }
 ?>
