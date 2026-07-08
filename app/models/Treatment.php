@@ -17,9 +17,9 @@ class Treatment {
         $query = "INSERT INTO treatments (nama_layanan, harga, durasi_menit) VALUES (?, ?, ?)";
         $stmt = $this->conn->prepare($query);
         return $stmt->execute([
-            htmlspecialchars($nama), 
-            htmlspecialchars($harga), 
-            htmlspecialchars($durasi)
+            $nama, 
+            $harga, 
+            $durasi
         ]);
     }
 
@@ -40,9 +40,9 @@ class Treatment {
         $query = "UPDATE treatments SET nama_layanan = ?, harga = ?, durasi_menit = ? WHERE id = ?";
         $stmt = $this->conn->prepare($query);
         return $stmt->execute([
-            htmlspecialchars($nama), 
-            htmlspecialchars($harga), 
-            htmlspecialchars($durasi), 
+            $nama, 
+            $harga, 
+            $durasi, 
             $id
         ]);
     }
