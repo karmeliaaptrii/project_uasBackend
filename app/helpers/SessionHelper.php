@@ -8,7 +8,7 @@ class SessionHelper {
     public static function checkLogin() {
         self::start();
         if (!isset($_SESSION['user_id'])) {
-            header("Location: ../public/login.php");
+            header("Location: /project_uasBackend/public/login.php");
             exit();
         }
     }
