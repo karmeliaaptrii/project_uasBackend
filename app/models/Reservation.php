@@ -1,12 +1,12 @@
 <?php
 class Reservation {
-    private $conn;
+    private ?PDO $conn;
 
-    public function __construct($db) {
+    public function __construct(PDO $db) {
         $this->conn = $db;
     }
 
-    public function create($user_id, $treatment_id, $tanggal, $jam, $file) {
+    public function create(int $user_id, int $treatment_id, string $tanggal, string $jam, array $file) {
         $fileName = $file['name'];
         $fileTmpName = $file['tmp_name'];
         $fileSize = $file['size'];
