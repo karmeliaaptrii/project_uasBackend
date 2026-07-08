@@ -24,7 +24,7 @@ $treatments = $treatmentModel->getAll();
     
     <a href="booking.php" style="background-color: blue; color: white; padding: 10px; text-decoration: none;">Buat Reservasi Sekarang</a>
     <a href="history.php" style="margin-left: 10px;">Riwayat Saya</a>
-    <a href="logout.php" style="color: red; margin-left: 10px;">Logout</a>
+    <a href="../logout.php" style="color: red; margin-left: 10px;">Logout</a>
     <hr>
 
     <h3>Katalog Layanan Kami:</h3>

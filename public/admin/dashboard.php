@@ -21,7 +21,7 @@ AdminMiddleware::check();
         <ul>
             <li><a href="treatment.php">Kelola Data Layanan Salon</a></li>
             <li><a href="reservation.php">Cek Antrean Reservasi (Segera Hadir)</a></li>
-            <li><a href="../customer/logout.php" style="color: red;">Logout</a></li>
+            <li><a href="../logout.php" style="color: red;">Logout</a></li>
         </ul>
     </nav>
 </body>
