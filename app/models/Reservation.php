@@ -53,5 +53,34 @@ class Reservation {
             return "Gagal memindahkan file bukti pembayaran ke server.";
         }
     }
+    public function getAllAdmin() {
+        $query = "SELECT r.*, u.nama as nama_pelanggan, u.email, t.nama_layanan, t.harga
+                  FROM reservations r
+                  JOIN users u ON r.user_id = u.id
+                  JOIN treatments t ON r.treatment_id = t.id
+                  ORDER BY r.tanggal_booking DESC, r.jam_booking DESC";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    // 2. Fungsi untuk Customer melihat riwayatnya sendiri
+    public function getHistoryUser($user_id) {
+        $query = "SELECT r.*, t.nama_layanan, t.harga
+                  FROM reservations r
+                  JOIN treatments t ON r.treatment_id = t.id
+                  WHERE r.user_id = ?
+                  ORDER BY r.tanggal_booking DESC";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute([$user_id]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    // 3. Fungsi untuk Admin mengubah status pesanan
+    public function updateStatus($id, $status) {
+        $query = "UPDATE reservations SET status = ? WHERE id = ?";
+        $stmt = $this->conn->prepare($query);
+        return $stmt->execute([$status, $id]);
+    }
 }
 ?>
