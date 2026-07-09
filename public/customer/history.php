@@ -11,36 +11,65 @@ $histori = $reservationModel->getHistoryUser($_SESSION['user_id']);
 ?>
 
 <!DOCTYPE html>
-<html>
-<head><title>Riwayat Reservasi Saya</title></head>
-<body style="font-family: Arial; padding: 20px;">
-    <h2>Riwayat Reservasi Anda</h2>
-    <a href="home.php">Kembali ke Beranda</a>
-    <hr>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Riwayat Reservasi Saya</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
 
-    <table border="1" cellpadding="10" cellspacing="0" width="100%">
-        <tr style="background-color: #f2f2f2;">
-            <th>Tanggal</th>
-            <th>Jam</th>
-            <th>Layanan</th>
-            <th>Harga</th>
-            <th>Status</th>
-        </tr>
-        <?php foreach ($histori as $h): ?>
-        <tr>
-            <td><?= htmlspecialchars($h['tanggal_booking']) ?></td>
-            <td><?= htmlspecialchars($h['jam_booking']) ?></td>
-            <td><?= htmlspecialchars($h['nama_layanan']) ?></td>
-            <td>Rp <?= number_format($h['harga'], 0, ',', '.') ?></td>
-            <td>
-                <?php
-                    if($h['status'] == 'Menunggu') echo "<b style='color:orange;'>Menunggu</b>";
-                    elseif($h['status'] == 'Disetujui') echo "<b style='color:green;'>Disetujui</b>";
-                    else echo "<b style='color:red;'>Dibatalkan</b>";
-                ?>
-            </td>
-        </tr>
-        <?php endforeach; ?>
-    </table>
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Riwayat Reservasi Anda</h2>
+        <a href="home.php" class="btn btn-outline-primary">Kembali ke Beranda</a>
+    </div>
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="ps-4">Tanggal</th>
+                            <th>Jam</th>
+                            <th>Layanan</th>
+                            <th>Harga</th>
+                            <th class="pe-4">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if (empty($histori)): ?>
+                            <tr>
+                                <td colspan="5" class="text-center py-4">Belum ada riwayat reservasi.</td>
+                            </tr>
+                        <?php else: ?>
+                            <?php foreach ($histori as $h): ?>
+                            <tr>
+                                <td class="ps-4"><?= htmlspecialchars($h['tanggal_booking']) ?></td>
+                                <td><?= htmlspecialchars($h['jam_booking']) ?></td>
+                                <td><?= htmlspecialchars($h['nama_layanan']) ?></td>
+                                <td>Rp <?= number_format($h['harga'], 0, ',', '.') ?></td>
+                                <td class="pe-4">
+                                    <?php
+                                        $badgeClass = '';
+                                        if($h['status'] == 'Menunggu') $badgeClass = 'bg-warning text-dark';
+                                        elseif($h['status'] == 'Disetujui') $badgeClass = 'bg-success';
+                                        else $badgeClass = 'bg-danger';
+                                    ?>
+                                    <span class="badge <?= $badgeClass ?>"><?= htmlspecialchars($h['status']) ?></span>
+                                </td>
+                            </tr>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -29,41 +29,66 @@ $antrean = $reservationModel->getAllAdmin();
 ?>
 
 <!DOCTYPE html>
-<html>
-<head><title>Kelola Reservasi Masuk</title></head>
-<body style="font-family: Arial; padding: 20px;">
-    <h2>Kelola Antrean Reservasi</h2>
-    <a href="dashboard.php">Kembali ke Dashboard</a>
-    <hr>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Kelola Reservasi</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
 
-    <table border="1" cellpadding="10" cellspacing="0" width="100%">
-        <tr style="background-color: #ddd;">
-            <th>Nama Pelanggan</th>
-            <th>Layanan</th>
-            <th>Jadwal</th>
-            <th>Bukti Bayar</th>
-            <th>Status</th>
-            <th>Aksi Admin</th>
-        </tr>
-        <?php foreach ($antrean as $a): ?>
-        <tr>
-            <td><?= htmlspecialchars($a['nama_pelanggan']) ?></td>
-            <td><?= htmlspecialchars($a['nama_layanan']) ?></td>
-            <td><?= htmlspecialchars($a['tanggal_booking']) ?> Pukul <?= htmlspecialchars($a['jam_booking']) ?></td>
-            <td>
-                <a href="../../uploads/payment/<?= htmlspecialchars($a['bukti_pembayaran']) ?>" target="_blank">Lihat Bukti</a>
-            </td>
-            <td><b><?= htmlspecialchars($a['status']) ?></b></td>
-            <td>
-                <?php if($a['status'] == 'Menunggu'): ?>
-                    <a href="reservation.php?aksi=setuju&id=<?= $a['id'] ?>&email=<?= $a['email'] ?>&nama=<?= $a['nama_pelanggan'] ?>&layanan=<?= $a['nama_layanan'] ?>&tgl=<?= $a['tanggal_booking'] ?>&jam=<?= $a['jam_booking'] ?>" style="color:green;" onclick="return confirm('Setujui pesanan ini?')">Setujui</a> | 
-                    <a href="reservation.php?aksi=tolak&id=<?= $a['id'] ?>" style="color:red;" onclick="return confirm('Tolak pesanan ini?')">Tolak</a>
-                <?php else: ?>
-                    Selesai
-                <?php endif; ?>
-            </td>
-        </tr>
-        <?php endforeach; ?>
-    </table>
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Kelola Antrean Reservasi</h2>
+        <a href="dashboard.php" class="btn btn-secondary">Kembali ke Dashboard</a>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Pelanggan</th>
+                            <th>Layanan</th>
+                            <th>Jadwal</th>
+                            <th>Bukti</th>
+                            <th>Status</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($antrean as $a): ?>
+                        <tr>
+                            <td><?= htmlspecialchars($a['nama_pelanggan']) ?></td>
+                            <td><?= htmlspecialchars($a['nama_layanan']) ?></td>
+                            <td><?= htmlspecialchars($a['tanggal_booking']) ?> <br> <small class="text-muted"><?= htmlspecialchars($a['jam_booking']) ?></small></td>
+                            <td>
+                                <a href="../../uploads/payment/<?= htmlspecialchars($a['bukti_pembayaran']) ?>" target="_blank" class="btn btn-sm btn-info text-white">Lihat</a>
+                            </td>
+                            <td>
+                                <?php 
+                                    $badge = ($a['status'] == 'Menunggu') ? 'bg-warning' : (($a['status'] == 'Disetujui') ? 'bg-success' : 'bg-danger');
+                                ?>
+                                <span class="badge <?= $badge ?>"><?= htmlspecialchars($a['status']) ?></span>
+                            </td>
+                            <td>
+                                <?php if($a['status'] == 'Menunggu'): ?>
+                                    <a href="reservation.php?aksi=setuju&id=<?= $a['id'] ?>&email=<?= $a['email'] ?>&nama=<?= $a['nama_pelanggan'] ?>&layanan=<?= $a['nama_layanan'] ?>&tgl=<?= $a['tanggal_booking'] ?>&jam=<?= $a['jam_booking'] ?>" class="btn btn-sm btn-success" onclick="return confirm('Setujui pesanan ini?')">Setujui</a>
+                                    <a href="reservation.php?aksi=tolak&id=<?= $a['id'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('Tolak pesanan ini?')">Tolak</a>
+                                <?php else: ?>
+                                    <span class="text-muted small">Selesai</span>
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
