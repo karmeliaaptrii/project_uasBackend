@@ -31,38 +31,73 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 ?>
 
 <!DOCTYPE html>
-<html>
-<head><title>Form Reservasi Salon</title></head>
-<body style="font-family: Arial; padding: 20px;">
-    <h2>Form Reservasi Layanan Salon</h2>
-    <a href="home.php">Kembali ke Beranda</a>
-    <hr>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Reservasi Salon</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
 
-    <?php if(isset($error)) echo "<p style='color:red; font-weight:bold;'>$error</p>"; ?>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-primary text-white text-center">
+                    <h4 class="mb-0">Form Reservasi Layanan</h4>
+                </div>
+                <div class="card-body p-4">
+                    
+                    <?php if(isset($error)): ?>
+                        <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
+                    <?php endif; ?>
 
-    <form method="POST" action="" enctype="multipart/form-data">
-        <label>Pilih Layanan Salon:</label><br>
-        <select name="treatment_id" required style="padding: 5px; width: 250px;">
-            <option value="">-- Pilih Layanan --</option>
-            <?php foreach($treatments as $t): ?>
-                <option value="<?= $t['id'] ?>">
-                    <?= htmlspecialchars($t['nama_layanan']) ?> - Rp <?= number_format($t['harga'], 0, ',', '.') ?>
-                </option>
-            <?php endforeach; ?>
-        </select>
-        <br><br>
+                    <form method="POST" action="" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label class="form-label">Pilih Layanan Salon:</label>
+                            <select name="treatment_id" class="form-select" required>
+                                <option value="">-- Pilih Layanan --</option>
+                                <?php foreach($treatments as $t): ?>
+                                    <option value="<?= $t['id'] ?>">
+                                        <?= htmlspecialchars($t['nama_layanan']) ?> - Rp <?= number_format($t['harga'], 0, ',', '.') ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
 
-        <label>Tanggal Booking:</label><br>
-        <input type="date" name="tanggal_booking" required style="padding: 5px;"><br><br>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Tanggal Booking:</label>
+                                <input type="date" name="tanggal_booking" class="form-control" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Jam Booking:</label>
+                                <input type="time" name="jam_booking" class="form-control" required>
+                            </div>
+                        </div>
 
-        <label>Jam Booking:</label><br>
-        <input type="time" name="jam_booking" required style="padding: 5px;"><br><br>
+                        <div class="mb-3">
+                            <label class="form-label">Upload Bukti Pembayaran:</label>
+                            <div class="alert alert-info py-2" style="font-size: 0.85rem;">
+                                Transfer ke BCA: <strong>123-456-789</strong> a/n Salon Cantik
+                            </div>
+                            <input type="file" name="bukti_pembayaran" class="form-control" required>
+                            <small class="text-muted">Max 2MB (JPG/PNG)</small>
+                        </div>
 
-        <label>Upload Bukti Pembayaran (Max 2MB, JPG/PNG):</label><br>
-        <p style="font-size: 12px; color: gray; margin: 0 0 5px 0;">Transfer ke Rekening BCA: 123-456-789 a/n Salon Glamour</p>
-        <input type="file" name="bukti_pembayaran" required><br><br>
+                        <div class="d-grid gap-2 mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg">Kirim Reservasi</button>
+                            <a href="home.php" class="btn btn-outline-secondary">Kembali ke Beranda</a>
+                        </div>
+                    </form>
 
-        <button type="submit" style="background-color: green; color: white; padding: 10px 20px; border: none; cursor: pointer;">Kirim Reservasi</button>
-    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

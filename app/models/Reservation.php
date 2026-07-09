@@ -1,6 +1,6 @@
 <?php
 class Reservation {
-    private ?PDO $conn;
+    private PDO $conn;
 
     public function __construct(PDO $db) {
         $this->conn = $db;
@@ -64,8 +64,7 @@ class Reservation {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // 2. Fungsi untuk Customer melihat riwayatnya sendiri
-    public function getHistoryUser($user_id) {
+    public function getHistoryUser(int $user_id) {
         $query = "SELECT r.*, t.nama_layanan, t.harga
                   FROM reservations r
                   JOIN treatments t ON r.treatment_id = t.id
@@ -76,8 +75,7 @@ class Reservation {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // 3. Fungsi untuk Admin mengubah status pesanan
-    public function updateStatus($id, $status) {
+    public function updateStatus(int $id, string $status) {
         $query = "UPDATE reservations SET status = ? WHERE id = ?";
         $stmt = $this->conn->prepare($query);
         return $stmt->execute([$status, $id]);

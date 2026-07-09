@@ -6,9 +6,9 @@ require_once '../../vendor/autoload.php';
 
 class MailHelper {
 
-    private $conn;
+    private PDO $conn;
 
-    public static function sendKonfirmasi($email_tujuan, $nama, $layanan, $tanggal, $jam) {
+    public static function sendKonfirmasi(string $email_tujuan, string $nama, string $layanan, string $tanggal, string $jam) {
         $mail = new PHPMailer(true);
         try {
             $mail->isSMTP();
@@ -24,7 +24,7 @@ class MailHelper {
 
             $mail->isHTML(true);
             $mail->Subject = 'Konfirmasi Reservasi Salon Disetujui';
-            $mail->Body    = "Halo <b>$nama</b>,<br><br>Kabar gembira! Reservasi Anda untuk layanan <b>$layanan</b> pada tanggal <b>$tanggal</b> jam <b>$jam</b> telah <b>DISETUJUI</b> oleh Admin.<br><br>Silakan datang tepat waktu.<br><br>Terima kasih,<br>Salon Glamour";
+            $mail->Body    = "Halo <b>$nama</b>,<br><br>Kabar gembira! Reservasi Anda untuk layanan <b>$layanan</b> pada tanggal <b>$tanggal</b> jam <b>$jam</b> telah <b>DISETUJUI</b> oleh Admin.<br><br>Silakan datang tepat waktu.<br><br>Terima kasih,<br>Salon Cantik";
 
             $mail->send();
             return true;
@@ -44,7 +44,7 @@ class MailHelper {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getHistoryUser($user_id) {
+    public function getHistoryUser(int $user_id) {
         $query = "SELECT r.*, t.nama_layanan, t.harga
                   FROM reservations r
                   JOIN treatments t ON r.treatment_id = t.id
@@ -55,7 +55,7 @@ class MailHelper {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function updateStatus($id, $status) {
+    public function updateStatus(int $id, string $status) {
         $query = "UPDATE reservations SET status = ? WHERE id = ?";
         $stmt = $this->conn->prepare($query);
         return $stmt->execute([$status, $id]);
